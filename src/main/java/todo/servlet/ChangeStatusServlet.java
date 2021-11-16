@@ -3,7 +3,6 @@ package todo.servlet;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import todo.model.ItemTodo;
-import todo.model.TodoStatus;
 import todo.store.psql.ItemTodoStore;
 
 import javax.servlet.ServletException;
@@ -11,26 +10,24 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
 
-public class AddItemServlet extends HttpServlet {
-    private static final Logger LOGGER = LogManager.getLogger(AddItemServlet.class);
+public class ChangeStatusServlet extends HttpServlet {
+    private static final Logger LOGGER = LogManager.getLogger(ChangeStatusServlet.class);
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        LOGGER.info("Adding item");
-        String desc = req.getParameter("desc");
-        boolean isDone = TodoStatus.getStatus(req.getParameter("status"));
-        ItemTodo itemTodo = new ItemTodo(desc, isDone);
+        String id = req.getParameter("id");
         try {
-            ItemTodoStore.getInstance().add(itemTodo);
-            resp.setStatus(200);
-        } catch (SQLException sqlException) {
+            ItemTodo item = ItemTodoStore.getInstance().findById(id);
+            item.setDone(!item.isDone());
+            ItemTodoStore.getInstance().replace(id, item);
+        } catch (Exception e) {
             resp.setStatus(409);
-            LOGGER.error(sqlException);
-            sqlException.printStackTrace();
+            LOGGER.error(e);
+            e.printStackTrace();
         }
         resp.sendRedirect(req.getContextPath());
     }
+
 }

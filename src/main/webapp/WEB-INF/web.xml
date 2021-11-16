@@ -12,6 +12,14 @@
         <servlet-name>AddItemServlet</servlet-name>
         <servlet-class>todo.servlet.AddItemServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LoadTodosServlet</servlet-name>
+        <servlet-class>todo.servlet.LoadTodosServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ChangeStatusServlet</servlet-name>
+        <servlet-class>todo.servlet.ChangeStatusServlet</servlet-class>
+    </servlet>
 
     <servlet-mapping>
         <servlet-name>TodoServlet</servlet-name>
@@ -20,5 +28,13 @@
     <servlet-mapping>
         <servlet-name>AddItemServlet</servlet-name>
         <url-pattern>/add</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoadTodosServlet</servlet-name>
+        <url-pattern>/loadtodos</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChangeStatusServlet</servlet-name>
+        <url-pattern>/changeStatus</url-pattern>
     </servlet-mapping>
 </web-app>

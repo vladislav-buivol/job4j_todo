@@ -10,25 +10,21 @@ public class ItemTodo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String name;
-    private Timestamp created;
     private String description;
-    private Timestamp deadline;
-    private boolean status;
+    private Timestamp created;
+    private boolean done;
 
-    public ItemTodo(String name, String description, Timestamp deadline, boolean status) {
-        this.name = name;
+    public ItemTodo(String description, boolean done) {
         this.description = description;
-        this.deadline = deadline;
-        this.status = status;
+        this.done = done;
     }
 
-    public String getName() {
-        return name;
+    public ItemTodo() {
     }
 
-    public void setName(String name) {
-        this.name = name;
+    @PrePersist
+    protected void onCreate() {
+        created = new Timestamp(System.currentTimeMillis());
     }
 
     public Timestamp getCreated() {
@@ -47,19 +43,19 @@ public class ItemTodo {
         this.description = description;
     }
 
-    public Timestamp getDeadline() {
-        return deadline;
+    public boolean isDone() {
+        return done;
     }
 
-    public void setDeadline(Timestamp deadline) {
-        this.deadline = deadline;
+    public void setDone(boolean done) {
+        this.done = done;
     }
 
-    public boolean isStatus() {
-        return status;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
+    public Integer getId() {
+        return id;
     }
 }

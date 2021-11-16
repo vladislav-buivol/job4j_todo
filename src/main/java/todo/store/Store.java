@@ -1,10 +1,10 @@
 package todo.store;
 
-
+import java.sql.SQLException;
 import java.util.Collection;
 
 public interface Store<T> {
-    T add(T t);
+    T add(T t) throws SQLException;
 
     boolean replace(String id, T t);
 
@@ -12,6 +12,5 @@ public interface Store<T> {
 
     Collection<T> findAll();
 
-    T findById();
-
+    T findById(String id);
 }
