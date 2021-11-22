@@ -2,7 +2,6 @@ package todo.servlet;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import todo.model.ItemTodo;
 import todo.store.psql.ItemTodoStore;
 
 import javax.servlet.ServletException;
@@ -10,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
 
 public class ChangeStatusServlet extends HttpServlet {
     private static final Logger LOGGER = LogManager.getLogger(ChangeStatusServlet.class);
@@ -19,9 +19,18 @@ public class ChangeStatusServlet extends HttpServlet {
             throws ServletException, IOException {
         String id = req.getParameter("id");
         try {
-            ItemTodo item = ItemTodoStore.getInstance().findById(id);
-            item.setDone(!item.isDone());
-            ItemTodoStore.getInstance().replace(id, item);
+            HashMap<String, Object> params = new HashMap<>();
+            params.put("id", Integer.parseInt(id));
+            boolean result = ItemTodoStore.instOf()
+                    .executeUpdate(
+                            "update ItemTodo set " +
+                                    " done = (select (done != true) from ItemTodo where id=:id)" +
+                                    " where id=:id",
+                            params);
+            if (!result) {
+                LOGGER.warn("Object was not updated");
+                resp.setStatus(409);
+            }
         } catch (Exception e) {
             resp.setStatus(409);
             LOGGER.error(e);

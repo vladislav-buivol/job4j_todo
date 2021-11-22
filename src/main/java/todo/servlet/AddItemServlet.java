@@ -24,7 +24,7 @@ public class AddItemServlet extends HttpServlet {
         boolean isDone = TodoStatus.getStatus(req.getParameter("status"));
         ItemTodo itemTodo = new ItemTodo(desc, isDone);
         try {
-            ItemTodoStore.getInstance().add(itemTodo);
+            ItemTodoStore.instOf().add(itemTodo);
             resp.setStatus(200);
         } catch (SQLException sqlException) {
             resp.setStatus(409);

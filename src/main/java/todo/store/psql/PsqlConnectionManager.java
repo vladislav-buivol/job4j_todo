@@ -21,13 +21,12 @@ public class PsqlConnectionManager implements AutoCloseable {
     private PsqlConnectionManager() {
     }
 
-    protected static PsqlConnectionManager getInstance() {
-        if (instance == null) {
-            instance = new PsqlConnectionManager();
-        } else if (instance.getSf().isClosed()) {
-            instance = new PsqlConnectionManager();
-        }
-        return instance;
+    private static final class Lazy {
+        private static final PsqlConnectionManager INST = new PsqlConnectionManager();
+    }
+
+    protected static PsqlConnectionManager instOf() {
+        return Lazy.INST;
     }
 
     protected StandardServiceRegistry getRegistry() {

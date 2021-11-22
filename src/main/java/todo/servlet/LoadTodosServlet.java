@@ -20,7 +20,7 @@ public class LoadTodosServlet extends HttpServlet {
             throws ServletException, IOException {
         resp.setContentType("application/json; charset=utf-8");
         OutputStream output = resp.getOutputStream();
-        String todos = GSON.toJson(ItemTodoStore.getInstance().findAll());
+        String todos = GSON.toJson(ItemTodoStore.instOf().findAll());
         this.getClass().getClassLoader().getResource("/status/done.png");
         output.write(todos.getBytes(StandardCharsets.UTF_8));
         output.flush();
