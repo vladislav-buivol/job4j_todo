@@ -20,11 +20,11 @@
     <title>Todo items</title>
 </head>
 <body>
+<jsp:include page="nav.jsp"/>
 <div class="container">
     <div class="card">
         <div class="card-header">Add new Todo item</div>
         <div class="card-body">
-            <!--<form action="<%=request.getContextPath()%>/add" autocomplete="off" method="post">-->
             <form autocomplete="off" method="post">
                 <div class="form-group">
                     <div class="row">
@@ -65,6 +65,7 @@
                     <th scope="col">Description</th>
                     <th scope="col">Created</th>
                     <th scope="col">Status</th>
+                    <th scope="col">Author</th>
                     <th scope="col"></th>
                 </tr>
                 </thead>

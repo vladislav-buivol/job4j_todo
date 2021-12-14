@@ -1,4 +1,4 @@
-package todo.servlet;
+package todo.servlet.todos;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,6 +21,6 @@ public class TodoServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         LOGGER.info("Handling get request");
-        req.getRequestDispatcher("index.jsp").forward(req, resp);
+        resp.sendRedirect(req.getContextPath() + "/index.jsp");
     }
 }

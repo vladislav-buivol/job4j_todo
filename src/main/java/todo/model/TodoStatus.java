@@ -7,8 +7,8 @@ public enum TodoStatus {
     DONE("done", true),
     IN_PROGRESS("in_progress", false);
 
-    private String val;
-    private boolean status;
+    private final String val;
+    private final boolean status;
 
     TodoStatus(String val, boolean status) {
         this.val = val;

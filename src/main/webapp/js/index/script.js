@@ -18,6 +18,12 @@ function createTable(todos) {
         if (!todo.done) {
             btnText = "Mark as Done";
         }
+        let aName;
+        if (todo.author == undefined) {
+            aName = "UNKNOWN"
+        } else {
+            aName = todo.author.name;
+        }
         tbody.innerHTML += `
                     <tr>
                     <td>
@@ -28,6 +34,9 @@ function createTable(todos) {
                     </td>
                     <td>
                     ${todo.created}
+                    </td>
+                    <td>
+                    ${aName}
                     </td>
                     <td>
                     <img src="img/status/${statusImg}">

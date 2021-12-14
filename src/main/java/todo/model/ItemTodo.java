@@ -14,9 +14,14 @@ public class ItemTodo {
     private Timestamp created;
     private boolean done;
 
-    public ItemTodo(String description, boolean done) {
+    @ManyToOne
+    @JoinColumn(name = "author_id")
+    private User author;
+
+    public ItemTodo(String description, boolean done, User author) {
         this.description = description;
         this.done = done;
+        this.author = author;
     }
 
     public ItemTodo() {

@@ -1,4 +1,4 @@
-package todo.servlet;
+package todo.servlet.todos;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -21,7 +21,6 @@ public class LoadTodosServlet extends HttpServlet {
         resp.setContentType("application/json; charset=utf-8");
         OutputStream output = resp.getOutputStream();
         String todos = GSON.toJson(ItemTodoStore.instOf().findAll());
-        this.getClass().getClassLoader().getResource("/status/done.png");
         output.write(todos.getBytes(StandardCharsets.UTF_8));
         output.flush();
         output.close();

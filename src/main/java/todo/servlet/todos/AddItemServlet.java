@@ -1,9 +1,10 @@
-package todo.servlet;
+package todo.servlet.todos;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import todo.model.ItemTodo;
 import todo.model.TodoStatus;
+import todo.model.User;
 import todo.store.psql.ItemTodoStore;
 
 import javax.servlet.ServletException;
@@ -22,7 +23,8 @@ public class AddItemServlet extends HttpServlet {
         LOGGER.info("Adding item");
         String desc = req.getParameter("desc");
         boolean isDone = TodoStatus.getStatus(req.getParameter("status"));
-        ItemTodo itemTodo = new ItemTodo(desc, isDone);
+        User author = (User) req.getSession().getAttribute("user");
+        ItemTodo itemTodo = new ItemTodo(desc, isDone, author);
         try {
             ItemTodoStore.instOf().add(itemTodo);
             resp.setStatus(200);

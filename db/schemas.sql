@@ -6,5 +6,16 @@ create table todos
     created     timestamp,
     description varchar(255),
     done        boolean not null,
+    author_id   int     not null references t_user (id),
     primary key (id)
-)
+);
+
+
+CREATE TABLE t_users
+(
+    id       SERIAL PRIMARY KEY,
+    email    TEXT NOT NULL UNIQUE,
+    name     TEXT NOT NULL,
+    password TEXT NOT NULL
+    --role_id  int  not null references t_role (id)
+);

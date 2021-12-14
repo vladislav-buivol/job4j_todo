@@ -1,17 +1,12 @@
 package todo.store.psql;
 
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 import todo.model.ItemTodo;
 import todo.store.Store;
 
 import java.sql.SQLException;
 import java.util.Collection;
-import java.util.Map;
-import java.util.function.Function;
 
-public class ItemTodoStore implements Store<ItemTodo> {
+public class ItemTodoStore extends PsqlStore<ItemTodo> {
     private ItemTodoStore() {
     }
 
@@ -61,39 +56,6 @@ public class ItemTodoStore implements Store<ItemTodo> {
 
     @Override
     public ItemTodo findById(String id) {
-        return this.txt(session -> session.get(ItemTodo.class, Integer.parseInt(id)));
-    }
-
-    @Override
-    public Collection<ItemTodo> executeSelect(String query, Map<String, Object> params) {
-        return this.txt(session -> createCustomQuery(query, params, session).list());
-    }
-
-    @Override
-    public boolean executeUpdate(String query, Map<String, Object> params) {
-        return this.txt(session -> createCustomQuery(query, params, session).executeUpdate() == 1);
-    }
-
-    private Query createCustomQuery(String query, Map<String, Object> params, Session session) {
-        Query q = session.createQuery(query);
-        for (String key : params.keySet()) {
-            q.setParameter(key, params.get(key));
-        }
-        return q;
-    }
-
-    private <T> T txt(final Function<Session, T> command) {
-        final Session session = PsqlConnectionManager.instOf().getSf().openSession();
-        final Transaction tx = session.beginTransaction();
-        try {
-            T rsl = command.apply(session);
-            tx.commit();
-            return rsl;
-        } catch (final Exception e) {
-            session.getTransaction().rollback();
-            throw e;
-        } finally {
-            session.close();
-        }
+        return findById(id, ItemTodo.class);
     }
 }
