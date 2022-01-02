@@ -1,12 +1,26 @@
 $(document).ready(
-    requestTodos(createTable)
+    requestTodos(createTable, logError)
 )
+
+function logError(err) {
+    console.log(err);
+}
 
 function createTable(todos) {
     let tbody = document.createElement("tbody");
     tbody.setAttribute('id', 'todosBody');
     for (let i in todos) {
         let todo = todos[i];
+        let categories = "";
+        if (todo.categories.length > 0) {
+            for (let catI in todo.categories) {
+                categories += todo.categories[catI].name;
+                if (catI < todo.categories.length - 1) {
+                    categories += ", ";
+                }
+            }
+        }
+
         if (!$('#showAll').is(':checked') && todo.done) {
             continue;
         }
@@ -40,6 +54,9 @@ function createTable(todos) {
                     </td>
                     <td>
                     <img src="img/status/${statusImg}">
+                    </td> 
+                     <td>
+                    ${categories}
                     </td>
                     <td>
                     <button type="button" class="btn btn-light" onclick="changeStatus(${todo.id})">${btnText}</button>
@@ -82,14 +99,11 @@ function updateTable() {
     requestTodos(createTable, logError);
 }
 
-function logError(err) {
-    console.log(err);
-}
-
 function add() {
     let description = $('#desc').val();
     let status = $('input[name="status"]:checked').val();
-    if (isEmpty(description) || isEmpty(status)) {
+    let cIds = $('#cIds').val();
+    if (isEmpty(description) || isEmpty(status) || $('#cIds').val().length === 0) {
         return;
     }
     $.ajax({
@@ -97,12 +111,13 @@ function add() {
         url: 'http://localhost:8080/job4j_todo/add',
         data: {
             desc: description,
-            status: status
+            status: status,
+            cIds: cIds
         }
     }).done(function (response) {
         updateTable();
     }).fail(function (err) {
-        console.log(err);
+        logError(err);
     })
 }
 

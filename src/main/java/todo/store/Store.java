@@ -2,7 +2,6 @@ package todo.store;
 
 import java.sql.SQLException;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 
 public interface Store<T> {

@@ -1,4 +1,4 @@
-package todo.store.psql;
+package todo.store.exception;
 
 public class NotSavedException extends RuntimeException {
     public NotSavedException(Object o) {

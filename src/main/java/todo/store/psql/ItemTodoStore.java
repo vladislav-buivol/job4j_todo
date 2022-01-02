@@ -43,7 +43,7 @@ public class ItemTodoStore extends PsqlStore<ItemTodo> {
     @Override
     public boolean delete(String id) {
         return this.txt(session -> session.createQuery("delete from ItemTodo where id =:id")
-                .setParameter("id", id)
+                .setParameter("id", Integer.parseInt(id))
                 .executeUpdate() == 1
         );
     }
@@ -51,11 +51,20 @@ public class ItemTodoStore extends PsqlStore<ItemTodo> {
     @Override
     public Collection<ItemTodo> findAll() {
         return this
-                .txt(session -> session.createQuery("from ItemTodo order by created desc ").list());
+                .txt(session -> session
+                        .createQuery(
+                                "select distinct it from ItemTodo it left join fetch it.categories"
+                                        + " order by it.created desc")
+                        .list());
     }
 
     @Override
     public ItemTodo findById(String id) {
-        return findById(id, ItemTodo.class);
+        return (ItemTodo) this.txt(session -> session
+                .createQuery(
+                        "select distinct it from ItemTodo it left join fetch it.categories "
+                                + "where it.id =:id"
+                ).setParameter("id", Integer.parseInt(id))
+                .list()).get(0);
     }
 }

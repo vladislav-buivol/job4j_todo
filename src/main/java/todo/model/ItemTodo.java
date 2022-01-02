@@ -2,6 +2,8 @@ package todo.model;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "todos")
@@ -17,6 +19,9 @@ public class ItemTodo {
     @ManyToOne
     @JoinColumn(name = "author_id")
     private User author;
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private Set<Category> categories = new HashSet<>();
 
     public ItemTodo(String description, boolean done, User author) {
         this.description = description;
@@ -62,5 +67,25 @@ public class ItemTodo {
 
     public Integer getId() {
         return id;
+    }
+
+    public User getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(User author) {
+        this.author = author;
+    }
+
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
+    }
+
+    public void addCategory(Category category) {
+        this.categories.add(category);
     }
 }

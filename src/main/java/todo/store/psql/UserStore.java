@@ -40,11 +40,10 @@ public class UserStore extends PsqlStore<User> {
         );
     }
 
-
     @Override
     public boolean delete(String id) {
         return this.txt(session -> session.createQuery("delete from User where id =:id")
-                .setParameter("id", id)
+                .setParameter("id", Integer.parseInt(id))
                 .executeUpdate() == 1
         );
     }

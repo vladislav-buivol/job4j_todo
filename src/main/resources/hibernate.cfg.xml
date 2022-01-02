@@ -20,5 +20,6 @@
         <mapping class="todo.model.ItemTodo"/>
         <mapping class="todo.role.Role"/>
         <mapping class="todo.model.User"/>
+        <mapping class="todo.model.Category"/>
     </session-factory>
 </hibernate-configuration>

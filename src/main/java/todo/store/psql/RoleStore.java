@@ -19,7 +19,6 @@ public class RoleStore extends PsqlStore<Role> {
         return Lazy.INST;
     }
 
-
     @Override
     public Role add(Role role) throws SQLException {
         return this.txt(session -> {
@@ -40,11 +39,10 @@ public class RoleStore extends PsqlStore<Role> {
         );
     }
 
-
     @Override
     public boolean delete(String id) {
         return this.txt(session -> session.createQuery("delete from Role where id =:id")
-                .setParameter("id", id)
+                .setParameter("id", Integer.parseInt(id))
                 .executeUpdate() == 1
         );
     }

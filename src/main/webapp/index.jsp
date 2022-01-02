@@ -20,7 +20,6 @@
     <title>Todo items</title>
 </head>
 <body>
-<jsp:include page="nav.jsp"/>
 <div class="container">
     <div class="card">
         <div class="card-header">Add new Todo item</div>
@@ -28,24 +27,43 @@
             <form autocomplete="off" method="post">
                 <div class="form-group">
                     <div class="row">
-                        <label for="desc">Description</label>
-                        <input id="desc" name="desc" type="text" placeholder="Enter description" class="form-control"
-                               required/>
+                        <div class="container pt-1">
+                            <label for="desc">Description</label>
+                            <input id="desc" name="desc" type="text" placeholder="Enter description"
+                                   class="form-control"
+                                   required/>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="row">
-                        <label for="status">Status</label>
-                        <div class="form-check" id="status">
-                            <input class="from-check-input" type="radio" name="status" value="done" id="done" required>
-                            <label for="done">
-                                Done
-                            </label>
-                            <input class="from-check-input" type="radio" name="status" value="in_progress"
-                                   id="inProgress" required>
-                            <label for="inProgress">
-                                In progress
-                            </label>
+                        <div class="container pt-1">
+                            <label for="status">Status</label>
+                            <div class="form-check" id="status">
+                                <input class="from-check-input" type="radio" name="status" value="done" id="done"
+                                       required>
+                                <label for="done">
+                                    Done
+                                </label>
+                                <input class="from-check-input" type="radio" name="status" value="in_progress"
+                                       id="inProgress" required>
+                                <label for="inProgress">
+                                    In progress
+                                </label>
+                            </div>
+                        </div>
+                        <div class="container pt-1">
+                            <div class="form-group row">
+                                <label class="col-form-label col-sm-3" for="cIds">Categories</label>
+                                <div class="col-sm-5">
+                                    <select class="form-control" name="cIds" id="cIds" multiple required>
+                                        <c:forEach items="${allCatigories}" var="cat">
+                                            <option value='<c:out value="${cat.id}"/>'><c:out
+                                                    value="${cat.name}"/></option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -66,6 +84,7 @@
                     <th scope="col">Created</th>
                     <th scope="col">Status</th>
                     <th scope="col">Author</th>
+                    <th scope="col">Categories</th>
                     <th scope="col"></th>
                 </tr>
                 </thead>

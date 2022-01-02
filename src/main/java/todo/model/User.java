@@ -85,7 +85,7 @@ public class User {
         }
     }
 
-    public boolean validatePwd(String enteredPwd){
+    public boolean validatePwd(String enteredPwd) {
         try {
             return MD5.validateString(enteredPwd, password);
         } catch (NoSuchAlgorithmException e) {
@@ -122,7 +122,8 @@ public class User {
             return nr.toString(16);
         }
 
-        public static boolean validateString(String str, String hash) throws NoSuchAlgorithmException {
+        public static boolean validateString(String str, String hash)
+                throws NoSuchAlgorithmException {
             return hash.equals(createHash(str));
         }
     }

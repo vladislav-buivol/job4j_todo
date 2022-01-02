@@ -40,7 +40,6 @@ public abstract class PsqlStore<T> implements Store<T> {
         return this.txt(session -> session.get(tClass, Integer.parseInt(id)));
     }
 
-
     public Query createCustomQuery(String query, Map<String, Object> params, Session session) {
         Query q = session.createQuery(query);
         for (String key : params.keySet()) {
