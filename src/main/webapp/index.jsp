@@ -20,6 +20,7 @@
     <title>Todo items</title>
 </head>
 <body>
+<jsp:include page="nav.jsp"/>
 <div class="container">
     <div class="card">
         <div class="card-header">Add new Todo item</div>
@@ -82,8 +83,8 @@
                     <th scope="col">Id</th>
                     <th scope="col">Description</th>
                     <th scope="col">Created</th>
-                    <th scope="col">Status</th>
                     <th scope="col">Author</th>
+                    <th scope="col">Status</th>
                     <th scope="col">Categories</th>
                     <th scope="col"></th>
                 </tr>
