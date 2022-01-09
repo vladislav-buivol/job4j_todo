@@ -1,7 +1,7 @@
 package todo.model;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,7 +13,9 @@ public class ItemTodo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String description;
-    private Timestamp created;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date created;
     private boolean done;
 
     @ManyToOne
@@ -34,14 +36,14 @@ public class ItemTodo {
 
     @PrePersist
     protected void onCreate() {
-        created = new Timestamp(System.currentTimeMillis());
+        created = new Date(System.currentTimeMillis());
     }
 
-    public Timestamp getCreated() {
+    public Date getCreated() {
         return created;
     }
 
-    public void setCreated(Timestamp created) {
+    public void setCreated(Date created) {
         this.created = created;
     }
 
